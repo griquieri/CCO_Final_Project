@@ -64,7 +64,7 @@ def lagrange_interpolation(x, y, xi):
 # Por fim, com os valores dados, um ultimo valor é solicitado, o valor a ser
 # interpolado.
 # Para acelrar testes, é possível usar redirecionamento de stdin, ex:
-# python3 lagrange.py < input.txt
+# python interpolation.py < input.txt
 # O arquivo de entrada pode possuir varios casos teste.
 
 
