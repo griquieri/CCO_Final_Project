@@ -1,3 +1,34 @@
+def divided_difference(x, y):
+    n = len(x)
+    divided_diff = [y[:]]  # Create a copy of y as the first row of divided differences
+
+    for j in range(1, n):
+        divided_diff_j = []
+        for i in range(n - j):
+            diff = (divided_diff[j - 1][i + 1] - divided_diff[j - 1][i]) / (
+                x[i + j] - x[i]
+            )
+            divided_diff_j.append(diff)
+        divided_diff.append(divided_diff_j)
+
+    return divided_diff
+
+
+def newton_interpolation(x, y, xi):
+    n = len(x)
+    divided_diff = divided_difference(x, y)
+    yi = divided_diff[0][0]
+
+    for j in range(1, n):
+        term = divided_diff[j][0]
+        product = 1.0
+        for i in range(j):
+            product *= xi - x[i]
+        yi += term * product
+
+    return yi
+
+
 def lagrange_interpolation(x, y, xi):
     n = len(x)
     yi = 0.0
@@ -23,6 +54,8 @@ def lagrange_interpolation(x, y, xi):
 
 
 def interpolate():
+    name = input()
+
     x_values = []
 
     while True:
@@ -42,11 +75,16 @@ def interpolate():
 
     value_to_interpolate = float(input())
 
+    print("Nome:", name)
     print("Valores de X: ", x_values)
     print("Valores de Y: ", y_values)
     print("Valor a ser interpolado: ", value_to_interpolate)
     print(
-        "Valor interpolado: ",
+        "Valor interpolado por newton: ",
+        newton_interpolation(x_values, y_values, value_to_interpolate),
+    )
+    print(
+        "Valor interpolado por lagrange: ",
         lagrange_interpolation(x_values, y_values, value_to_interpolate),
     )
 
@@ -54,5 +92,6 @@ def interpolate():
 try:
     while True:
         interpolate()
+        input()  # Linha vazia entre testes
 except EOFError:
     pass
