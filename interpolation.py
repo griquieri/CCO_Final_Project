@@ -1,3 +1,18 @@
+# Lê uma linha de números separados por vírgula. Whitespace é ignorado nessa linha.
+def read_number_list():
+    inp = input()
+    numbers = inp.replace(" ", "").split(",")
+
+    try:
+        ret_value = [float(number) for number in numbers]
+    except ValueError:
+        print("Valor inválido na linha")
+        print(inp)
+        exit(1)
+
+    return ret_value
+
+
 def divided_difference(x, y):
     n = len(x)
     divided_diff = [y[:]]  # Create a copy of y as the first row of divided differences
@@ -54,28 +69,20 @@ def lagrange_interpolation(x, y, xi):
 
 
 def interpolate():
-    name = input()
+    function_name = input()
+    x_values = read_number_list()
+    y_values = read_number_list()
 
-    x_values = []
+    if len(x_values) != len(y_values):
+        print("Quantidade de valores de X e Y diferentes")
+        exit(1)
+    try:
+        value_to_interpolate = float(input())
+    except EOFError:
+        print("Valor a ser interpolado é inválido")
+        exit(1)
 
-    while True:
-        inp = input("")
-        if inp == "":
-            break
-        x_values.append(float(inp))
-
-    if len(x_values) == 0:
-        raise Exception("Valores inválidos")
-
-    y_values = []
-
-    for _ in range(len(x_values)):
-        inp = input()
-        y_values.append(float(inp))
-
-    value_to_interpolate = float(input())
-
-    print("Nome:", name)
+    print("Nome:", function_name)
     print("Valores de X: ", x_values)
     print("Valores de Y: ", y_values)
     print("Valor a ser interpolado: ", value_to_interpolate)
